@@ -83,7 +83,7 @@ class Application extends Component {
 					{wizardMode ? <Stepper mode={stepperState} /> :
 						<AppControls {...otherProps} appState={state} help={searchHelp}
 									 zoom={zoom} onShowWelcome={this.onShowWelcome}/>}
-						 <SheetControls actionsDisabled={true} statusDisabled={false}/>
+						 <SheetControls actionsDisabled={true} appState={state} statusDisabled={false} zoom={zoom}/>
 					<Grid onClick={this.onClick}>
 					{/*
 						<Row>
