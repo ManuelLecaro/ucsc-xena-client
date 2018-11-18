@@ -17,6 +17,10 @@ import nav from './nav';
 // should really be in a config file.
 const searchHelp = 'https://ucsc-xena.gitbook.io/project/overview-of-features/filter-and-subgrouping';
 
+function clearZoom(samples, zoom) {
+    return _.merge(zoom, {count: samples, index: 0});
+}
+
 class Application extends Component {
 //	onPerf = () => {
 //		if (this.perf) {
@@ -42,15 +46,19 @@ class Application extends Component {
 		// nested render to different DOM tree
 		nav({isPublic, getState, onImport, onNavigate, activeLink: 'heatmap'});
 	}
+	onClearZoom = () => {
+		const {state: {samples, zoom}} = this.props;
+        this.props.callback(['zoom', clearZoom(samples.length, zoom)]);
+	};
 	onHideError = () => {
 		this.props.callback(['stateError', undefined]);
 	};
 	onShowWelcome = () => {
 		this.props.onShowWelcome(true);
-	}
+	};
 	onHideWelcome = () => {
 		this.props.onShowWelcome(false);
-	}
+	};
 //	onSearchIDAndFilterColumn = (qsamplesList) => {
 //		var {state: {samples, cohortSamples}} = this.props,
 //			qsampleListObj = {},
@@ -68,7 +76,7 @@ class Application extends Component {
 	render() {
 		let {state, stateError, children, stepperState, loadPending, ...otherProps} = this.props,
 			{callback} = otherProps,
-			{wizardMode, showWelcome, zoom} = state;
+			{editing, wizardMode, showWelcome, zoom} = state;
 //			onSearchIDAndFilterColumn = this.onSearchIDAndFilterColumn;
 
 		if (loadPending) {
@@ -83,7 +91,8 @@ class Application extends Component {
 					{wizardMode ? <Stepper mode={stepperState} /> :
 						<AppControls {...otherProps} appState={state} help={searchHelp}
 									 zoom={zoom} onShowWelcome={this.onShowWelcome}/>}
-						 <SheetControls actionsDisabled={true} appState={state} statusDisabled={false} zoom={zoom}/>
+						 <SheetControls actionsDisabled={true} appState={state} clearZoom={this.onClearZoom}
+										statusDisabled={editing !== null} zoom={zoom}/>
 					<Grid onClick={this.onClick}>
 					{/*
 						<Row>
