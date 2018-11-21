@@ -13,7 +13,7 @@ var spinner = require('../ajax-loader.gif');
 var mutationVector = require('../models/mutationVector');
 //var ValidatedInput = require('./ValidatedInput');
 var konami = require('../konami');
-var Crosshair = require('./Crosshair');
+var ZoomCrosshair = require('./ZoomCrosshair');
 var {chromRangeFromScreen} = require('../exonLayout');
 var parsePos = require('../parsePos');
 var {categoryMore} = require('../colorScales');
@@ -706,10 +706,10 @@ class Column extends PureComponent {
 							samples={samples.slice(zoom.index, zoom.index + zoom.count)}
 							samplesMatched={samplesMatched}/>
 						<div style={{position: 'relative'}}>
-							<Crosshair height={zoom.height} frozen={!interactive || this.props.frozen}>
+							<ZoomCrosshair frozen={!interactive || this.props.frozen}>
 								{widgets.column({ref: 'plot', id, column, data, index, zoom, samples, onClick, fieldFormat, sampleFormat, tooltip})}
 								{getStatusView(status, this.onReload)}
-							</Crosshair>
+							</ZoomCrosshair>
 						</div>
 					</ResizeOverlay>
 				</ColCard>

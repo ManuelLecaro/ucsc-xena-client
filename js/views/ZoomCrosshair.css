@@ -1,0 +1,38 @@
+.crosshairs {
+	position: relative;
+	pointer-events: none;
+	z-index: 999999;
+	-webkit-touch-callout: none;
+	user-select: none;
+}
+.crosshair {
+	pointer-events: none;
+	-webkit-touch-callout: none;
+	user-select: none;
+	background-image:url('./zoomDots.png');
+}
+.crosshairH {
+	height: 1px;
+	left: 0;
+	width: 100%;
+	position: fixed;
+}
+.crosshairV {
+	bottom: 0;
+	position: fixed;
+	top: 0;
+	width: 1px;
+	z-index: 999999;
+}
+
+.crosshairTarget {
+	border: 1px dashed rgba(0, 0, 0, 0.87);
+	border-radius: 50%;
+	height: 13px;
+	pointer-events: none;
+	position: absolute;
+	user-select: none;
+	-webkit-touch-callout: none;
+	width: 13px;
+	z-index: 999999;
+}
