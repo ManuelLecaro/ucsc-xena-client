@@ -18,7 +18,7 @@ import nav from './nav';
 const searchHelp = 'https://ucsc-xena.gitbook.io/project/overview-of-features/filter-and-subgrouping';
 
 function clearZoom(samples, zoom) {
-    return _.merge(zoom, {count: samples, index: 0});
+	return _.merge(zoom, {count: samples, index: 0});
 }
 
 class Application extends Component {
@@ -48,7 +48,7 @@ class Application extends Component {
 	}
 	onClearZoom = () => {
 		const {state: {samples, zoom}} = this.props;
-        this.props.callback(['zoom', clearZoom(samples.length, zoom)]);
+		this.props.callback(['zoom', clearZoom(samples.length, zoom)]);
 	};
 	onHideError = () => {
 		this.props.callback(['stateError', undefined]);
