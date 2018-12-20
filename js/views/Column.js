@@ -689,6 +689,7 @@ class Column extends PureComponent {
 						((_.getIn(column, ['showIntrons']) === true) ?  "geneIntron" : "geneExon")}/>
 				: null;
 
+				console.log(selection);
 		// FF 'button' tag will not emit 'mouseenter' events (needed for
 		// tooltips) for children. We must use a different tag, e.g. 'label'.
 		// Button and Dropdown.Toggle will allow overriding the tag.  However
