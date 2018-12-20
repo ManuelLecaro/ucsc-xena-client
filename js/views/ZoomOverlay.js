@@ -19,7 +19,7 @@ class ZoomOverlay extends React.Component {
 		var {geneHeight, height, positionHeight, selection, children} = this.props;
 		if (selection) {
 			var {direction, offset, overlay} = selection,
-				directionHorizontal = direction === 'h' ? true : false,
+				annotationZoom = direction === 'h' ? true : false,
 				iEnd = overlay.iend,
 				iStart = overlay.istart,
 				sEnd = overlay.send,
@@ -35,21 +35,15 @@ class ZoomOverlay extends React.Component {
 				posY3Annotation = posY4Annotation - positionHeight + 2, // Probe top position
 				posX1Samples = (iStartSamples === sStartSamples) && (iEndSamples === sEndSamples) ? 20 : 26, // Spreadsheet A left position
 				posX2Samples = (iStartSamples === sStartSamples) && (iEndSamples === sEndSamples) ? posX1Samples : (posX1Samples + 12), // Spreadsheet A left position, zoom mode
-				posX3Samples = window.innerWidth;
-			if ( directionHorizontal ) {
-				var polygonPointsH = iStart !== null ? `${iStart},${posY1Annotation} ${iEnd},${posY1Annotation} ${iEnd},${posY3Annotation} ${sEnd},${posY4Annotation} ${sEnd},${posY5Annotation} ${sStart},${posY5Annotation} ${sStart},${posY4Annotation} ${iStart},${posY3Annotation} ${iStart},${posY1Annotation}` : `${sStart},${posY1Annotation} ${sEnd},${posY1Annotation} ${sEnd},${posY5Annotation} ${sStart},${posY5Annotation} ${sStart},${posY1Annotation}`;
-			}
-			if ( !directionHorizontal ) {
-				var polygonPointsV = `0,${iStartSamples} ${posX1Samples},${iStartSamples} ${posX2Samples},${sStartSamples} ${posX3Samples},${sStartSamples} ${posX3Samples},${sEndSamples} ${posX2Samples},${sEndSamples} ${posX1Samples},${iEndSamples} 0,${iEndSamples} 0,${sStartSamples}`;
-			}
-			var polygonPoints = directionHorizontal ? polygonPointsH : polygonPointsV;
+				posX3Samples = window.innerWidth,
+				polygonPoints = annotationZoom ? `${iStart},${posY1Annotation} ${iEnd},${posY1Annotation} ${iEnd},${posY3Annotation} ${sEnd},${posY4Annotation} ${sEnd},${posY5Annotation} ${sStart},${posY5Annotation} ${sStart},${posY4Annotation} ${iStart},${posY3Annotation} ${iStart},${posY1Annotation}` : `0,${iStartSamples} ${posX1Samples},${iStartSamples} ${posX2Samples},${sStartSamples} ${posX3Samples},${sStartSamples} ${posX3Samples},${sEndSamples} ${posX2Samples},${sEndSamples} ${posX1Samples},${iEndSamples} 0,${iEndSamples} 0,${sStartSamples}`;
 		}
 		return (
 			<div className={compStyles.ZoomOverlay}>
 				{children}
 				{selection ? <svg
-					className={classNames(compStyles.overlay, {[compStyles.overlayV]: !directionHorizontal}, {[compStyles.overlayH]: directionHorizontal})}
-					style={{height: directionHorizontal ? posY5Annotation : '100%'}}>
+					className={classNames(compStyles.overlay, {[compStyles.overlayV]: !annotationZoom}, {[compStyles.overlayH]: annotationZoom})}
+					style={{height: annotationZoom ? posY5Annotation : '100%'}}>
 					<polygon points={polygonPoints}/>
 				</svg> : null}
 			</div>

@@ -21,7 +21,7 @@
 /* Horizontal drag overlay */
 .overlayH {
 	bottom: 0;
-	fill: black24;
+	fill: rgba(136, 136, 136, 0.45);
 	left: 0;
 	overflow: visible !important;
 	position: absolute;
@@ -30,7 +30,7 @@
 
 /* Vertical drag overlay */
 .overlayV {
-	fill: black24;
+	fill: rgba(136, 136, 136, 0.45);
 	left: 0;
 	top: 0;
 	width: 100%;
