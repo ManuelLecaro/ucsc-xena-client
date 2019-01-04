@@ -421,6 +421,7 @@ var zoomTranslateSelection = (props, selection, zone) => {
 class Column extends PureComponent {
 	state = {
 		dragZoom: {},
+		geneZoomHover: false,
 		specialDownloadMenu: specialDownloadMenu
 	};
 
@@ -541,9 +542,14 @@ class Column extends PureComponent {
 	};
 
 	onXZoomClear = () => {
+		this.setState({geneZoomHover: false});
 		let {id, column: {maxXZoom}, onXZoom} = this.props,
 			position = getPosition(maxXZoom, '', '');
 		onXZoom(id, position);
+	};
+
+	onXZoomHover = (ev) => {
+		this.setState({geneZoomHover: ev});
 	};
 
 	onMenuToggle = (open) => {
@@ -655,7 +661,7 @@ class Column extends PureComponent {
 			isChrom = !!parsePos(_.get(column.fieldList || column.fields, 0),
 					_.getIn(column, ['assembly'])),
 			isXAnnotation = column.xzoom !== undefined && !((_.get(column.xzoom, ['start']) === _.get(column.maxXZoom, ['start'])) && ((_.get(column.xzoom, ['end'])) === (_.get(column.maxXZoom, ['end'])))),
-			{specialDownloadMenu, dragZoom} = this.state,
+			{dragZoom, geneZoomHover, specialDownloadMenu} = this.state,
 			{selection} = dragZoom,
 			{width, dataset, columnLabel, fieldLabel, user} = column,
 			{onMode, onTumorMap, onMuPit, onCluster, onShowIntrons, onSortVisible, onSpecialDownload} = this,
@@ -669,6 +675,7 @@ class Column extends PureComponent {
 			// move this to state to generalize to other annotations.
 			annotation = showPosition(column) ?
 				<RefGeneAnnotation
+					background={geneZoomHover ? '#fafafa' : 'white'}
 					id={id}
 					column={column}
 					position={_.getIn(column, ['layout', 'chrom', 0])}
@@ -685,6 +692,7 @@ class Column extends PureComponent {
 				: null,
 			scale = showPosition(column) ?
 				<ChromPosition
+					background={geneZoomHover ? '#fafafa' : 'white'}
 					layout = {column.layout}
 					width = {width}
 					scaleHeight ={scaleHeight}
@@ -713,6 +721,7 @@ class Column extends PureComponent {
 									onChange={this.onFieldLabel}
 									value={{default: fieldLabel, user: user.fieldLabel}} />}
 								onClick={this.onXZoomClear}
+								onHover={this.onXZoomHover}
 								xAnnotationRange={xAnnotationRange}
 								xAnnotationZoom={annotation && isXAnnotation}
 								controls={!interactive ? (first ? refreshIcon : null) :
@@ -737,10 +746,11 @@ class Column extends PureComponent {
 									<DragSelect enabled={!wizardMode}
 											onDrag={(s) => this.onDragZoom(s, 'a')} onSelect={(s) => this.onDragZoomSelect(s, 'a')}>
 									{annotation ?
-										<div>
+										<div className={geneZoomHover ? 'geneZoom' : ''}>
 											{scale}
 											<div style={{height: 2}}/>
 											{annotation}
+											{geneZoomHover ? annotation : null}
 										</div> : null}
 								</DragSelect>
 							</div>

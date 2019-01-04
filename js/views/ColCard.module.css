@@ -24,6 +24,15 @@
 	opacity: 1;
 }
 
+:global(.Column .geneZoom) {
+	background-color: #FAFAFA;
+	box-shadow: 0 16px 16px 0 rgba(0,0,0,0.24);
+	padding: 8px 0;
+	position: absolute;
+	top: -8px;
+	z-index: 999999;
+}
+
 /* Container around column label (A, B, C etc) and controls */
 .headerContainer {
 	align-items: center;

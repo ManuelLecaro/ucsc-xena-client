@@ -248,12 +248,12 @@ class RefGeneDrawing extends React.Component {
 	};
 
 	draw = (props) => {
-		var {width, layout, height, positionHeight, mode, probePosition} = props;
+		var {background, width, layout, height, positionHeight, mode, probePosition} = props;
 		this.computeAnnotationLanes(props, false);
 		var {lanes, perLaneHeight, arrows, laneOffset} = this.annotationLanes;
 
-		// white background
-		this.vg.box(0, 0, width, height, 'white');
+		// white background default, #fafafa for show zoom indicator hover state
+		this.vg.box(0, 0, width, height, background);
 
 		if (!width || !layout) {
 			return;

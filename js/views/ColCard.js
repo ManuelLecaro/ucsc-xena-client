@@ -27,6 +27,17 @@ var CardAvatar = require('./CardAvatar');
 var compStyles = require('./ColCard.module.css');
 
 class ColCard extends React.Component {
+
+	onMouseOut = () => {
+		var {onHover} = this.props;
+			onHover(false);
+	};
+
+	onMouseOver = () => {
+		var {onHover} = this.props;
+		onHover(true);
+	};
+
 	render() {
 		var {children, sortable, controls, colId, onClick, subtitle, title, wizardMode, xAnnotationRange, xAnnotationZoom, zoomCard} = this.props;
 		return (
@@ -40,7 +51,7 @@ class ColCard extends React.Component {
 				</div>
 				<div className={compStyles.titleContainer}>
 					<CardTitle className={compStyles.title} title={title} subtitle={subtitle}/>
-					{xAnnotationZoom ? <div className={compStyles.geneZoomControl} onClick={onClick} title={`Zoomed to ${xAnnotationRange}%`}><span>Zoomed to {xAnnotationRange}%</span><i className='material-icons'>cancel</i></div> : null }
+					{xAnnotationZoom ? <div className={compStyles.geneZoomControl} onClick={onClick} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} title={`Zoomed to ${xAnnotationRange}%`}><span>Zoomed to {xAnnotationRange}%</span><i className='material-icons'>cancel</i></div> : null }
 				</div>
 				{children}
 			</Card>

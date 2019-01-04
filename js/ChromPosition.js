@@ -48,13 +48,13 @@ function numberOrAbrev(vg, width, font, n) {
 var margin = 8;
 
 class ChromPosition extends React.Component {
-	draw = (width, height, layout, mode = "coordinate") => {
+	draw = (background, width, height, layout, mode = "coordinate") => {
 		var vg = this.vg;
 
 		if (vg.width() !== width) {
 			vg.width(width);
 		}
-		vg.box(0, 0, width, height, 'white'); // white background
+		vg.box(0, 0, width, height, background); // white background default, #fafafa for show zoom indicator hover state
 		if (!layout) {
 			return;
 		}
@@ -104,9 +104,9 @@ class ChromPosition extends React.Component {
 
 	//shouldComponentUpdate: () => false,
 	componentDidMount() {
-		var {width, layout, scaleHeight, mode} = this.props;
+		var {background, width, layout, scaleHeight, mode} = this.props;
 		this.vg = vgcanvas(ReactDOM.findDOMNode(this.refs.canvas), width, scaleHeight);
-		this.draw(width, scaleHeight, layout, mode);
+		this.draw(background, width, scaleHeight, layout, mode);
 	}
 
 	/*componentWillReceiveProps() {
@@ -114,10 +114,10 @@ class ChromPosition extends React.Component {
 		this.draw(width, scaleHeight, layout, mode);
 	},*/
 	render() {
-		var {width, layout, scaleHeight, mode} = this.props;
+		var {background, width, layout, scaleHeight, mode} = this.props;
 
 		if (this.vg) {
-			this.draw(width, scaleHeight, layout, mode);
+			this.draw(background, width, scaleHeight, layout, mode);
 		}
 		return (
 			<canvas
