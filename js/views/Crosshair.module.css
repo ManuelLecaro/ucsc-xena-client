@@ -25,6 +25,11 @@
 	background-image: url('./dots.gif');
 }
 
+/* Crosshair - frozen mode */
+.frozenCrosshair {
+	background-image: url('./frozenDots.png');
+}
+
 /* Horizontal crosshair */
 .crosshairH {
 	height: 1px;

@@ -52,17 +52,19 @@ class Crosshair extends PureComponent {
 				crosshairVHeight = geneHeight + 8 + height,
 				crosshairVTop = zone === 'a' ? offset.y - 8 : offset.y - geneHeight - 8;
 		}
-		let getCrosshairVClassName = (zoomMode) => {
+		let getCrosshairVClassName = (zoomMode, frozen) => {
 			return classNames({
 				[compStyles.crosshairV]: !zoomMode,
-				[compStyles.inspectCrosshair]: !zoomMode,
+				[compStyles.inspectCrosshair]: !zoomMode && !frozen,
+				[compStyles.frozenCrosshair]: frozen,
 				[compStyles.zoomCrosshairV]: zoomMode
 			});
 		};
-		let getCrosshairHClassName = (zoomMode) => {
+		let getCrosshairHClassName = (zoomMode, frozen) => {
 			return classNames({
 				[compStyles.crosshairH]: !zoomMode,
-				[compStyles.inspectCrosshair]: !zoomMode,
+				[compStyles.inspectCrosshair]: !zoomMode && !frozen,
+				[compStyles.frozenCrosshair]: frozen,
 				[compStyles.zoomCrosshairH]: zoomMode
 			});
 		};
@@ -71,7 +73,7 @@ class Crosshair extends PureComponent {
 				{children}
 				{zoomMode || mousing ?
 					<div
-						className={classNames(compStyles.crosshair, getCrosshairVClassName(zoomMode))}
+						className={classNames(compStyles.crosshair, getCrosshairVClassName(zoomMode, frozen))}
 						style={{bottom: zoomMode ? 'unset' : 0, left: zoomMode ? crosshair.x : x, height: zoomMode ? crosshairVHeight : height, top: zoomMode ? crosshairVTop : 'unset'}}/> : null}
 				{zoomMode ?
 					<div className={classNames(compStyles.crosshair, compStyles.crosshairTarget)}
@@ -80,7 +82,7 @@ class Crosshair extends PureComponent {
 					<Portal container={document.body}>
 						<div className={classNames(compStyles.crosshairs)}>
 									<span
-										className={classNames(compStyles.crosshair, getCrosshairHClassName(zoomMode))}
+										className={classNames(compStyles.crosshair, getCrosshairHClassName(zoomMode, frozen))}
 										style={{top: zoomMode ? crosshair.y : y}}/>
 						</div>
 					</Portal> : null}
